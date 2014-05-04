@@ -1,9 +1,14 @@
 /*
-  SnakeUNO
+  WildSnakeUNO
+  
+A two-segment snake slithers aimlessly over the display. On intersections, 
+the next step is chosen at random.
 
-Snake head position and direction is coded like pictured below, i.e. when
-the snake head is at the middle segment going right, the code is 6, going 
-left in the same place is code 13.
+Most of the logic is encoded in the `moves` array which lists possible next
+steps for each current position and direction. Snake head position and 
+direction is coded like pictured below, i.e. when the snake head is at the 
+middle segment going right, the code is 6, going left in the same place is 
+code 13.
 
        >:0
        <:7
@@ -24,26 +29,25 @@ To understand this diagram, read:
 v as a down arrow
 ^ as an up arrow
 
-The moves array lists possible moves for each head position/direction.
-
 */
 
-// {number_of_choices, first_choice, second_choice_if_available}
-int moves[][3] = {
-  {1, 1, -1},  // 0
-  {2, 13, 2},  // 1
-  {1, 3, -1},  // 2
-  {1, 4, -1},  // 3
-  {2, 6, 5},   // 4
-  {1, 0, -1},  // 5
-  {2, 2, 8},   // 6
-  {1, 12, -1}, // 7
-  {1, 7, -1},  // 8
-  {2, 13, 8},  // 9
-  {1, 9, -1},  // 10
-  {1, 10, -1}, // 11
-  {2, 6, 11},  // 12
-  {2, 5, 11}   // 13
+// {first_choice, second_choice*}
+// * -1 means there is no second_choice
+int moves[][2] = {
+  {1, -1},  // 0
+  {13, 2},  // 1
+  {3, -1},  // 2
+  {4, -1},  // 3
+  {6, 5},   // 4
+  {0, -1},  // 5
+  {2, 8},   // 6
+  {12, -1}, // 7
+  {7, -1},  // 8
+  {13, 8},  // 9
+  {9, -1},  // 10
+  {10, -1}, // 11
+  {6, 11},  // 12
+  {5, 11}   // 13
 };
 
 /*     A
@@ -60,20 +64,25 @@ int moves[][3] = {
 int display[] = {12, 13, 7, 8, 9, 11, 10};
 const int SEGMENTS = 7;
 
-int head = 1; // segment A
-int tail = 0; // segment F
+int head = 1; // segment B
+int tail = 0; // segment A
 
 void setup() {
   for (int i=0; i<SEGMENTS; i++) {
     pinMode(display[i], OUTPUT);
   }
+  digitalWrite(display[tail % 7], HIGH);
 }
 
 void loop() {
-    digitalWrite(display[head % 7], HIGH);
-    delay(analogRead(A0));
-    digitalWrite(display[tail % 7], LOW);
-    tail = head;
-    int num_choices = moves[head][0];
-    head = moves[head][random(num_choices)+1];
+  digitalWrite(display[head % 7], HIGH);
+  delay(analogRead(A0));
+  digitalWrite(display[tail % 7], LOW);
+  tail = head;
+  int* choices = moves[head];
+  if (choices[1] == -1) {
+    head = choices[0];
+  } else {
+    head = choices[random(2)];
+  }
 }
