@@ -20,6 +20,7 @@ def draw_panel():
     square('yellow')
     square('green')
 
+# step 2: type code FROM this line
 def switch(x, y):
     print('click at y = ', y)
     if 0 <= y < 100:
@@ -29,8 +30,9 @@ def switch(x, y):
     else:
         bgcolor('dark red')
 
-draw_panel()
-
 onscreenclick(switch)
+# step 2: type code TO this line
+
+draw_panel()
 
 mainloop()
