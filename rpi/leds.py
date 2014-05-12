@@ -1,9 +1,9 @@
 from time import sleep
-from atexit import atexit
+import atexit
 import RPi.GPIO as GPIO
 
+atexit.register(GPIO.cleanup)
 GPIO.setmode(GPIO.BOARD)
-atexit(GPIO.cleanup)
 
 LED_PINS = {'red': 3, 'yellow': 5, 'green': 7}
 
