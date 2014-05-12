@@ -5,15 +5,15 @@ import RPi.GPIO as GPIO
 atexit.register(GPIO.cleanup)
 GPIO.setmode(GPIO.BOARD)
 
-LED_PINS = {'red': 3, 'yellow': 5, 'green': 7}
+LED_PINS = [('red', 3), ('yellow', 5), ('green', 7)]
 
 
 def activate(active_color):
-    for color, pin in LED_PINS.items():
+    for color, pin in LED_PINS:
         GPIO.output(pin, color == active_color)
 
 
-for pin in LED_PINS.values():
+for color, pin in LED_PINS:
     GPIO.setup(pin, GPIO.OUT)
     GPIO.output(pin, 0)
 
@@ -21,6 +21,7 @@ for pin in LED_PINS.values():
 if __name__=='__main__':
 
     for i in range(3):
-        for color in LED_PINS:
+        for color, pin in LED_PINS:
+            print color
             activate(color)
             sleep(.5)
