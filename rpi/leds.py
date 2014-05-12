@@ -20,8 +20,7 @@ for color, pin in LED_PINS:
 
 if __name__=='__main__':
 
-    for i in range(3):
-        for color, pin in LED_PINS:
-            print(color)
-            activate(color)
-            sleep(.5)
+    for color, pin in LED_PINS * 3:
+        print(color)
+        activate(color)
+        sleep(.5)
