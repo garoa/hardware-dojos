@@ -21,13 +21,13 @@ def draw_panel():
     square('green')
 
 def switch(x, y):
-    print(x, y)
+    print('click at y = ', y)
     if 0 <= y < 100:
-        bgcolor('#080')
+        bgcolor('dark green')
     elif 100 <= y < 200:
         bgcolor('#880')
     else:
-        bgcolor('#800')
+        bgcolor('dark red')
 
 draw_panel()
 
