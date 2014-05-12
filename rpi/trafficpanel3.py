@@ -1,5 +1,5 @@
 from turtle import *
-from trafficleds import activate
+from leds import activate       # <-- step 5
 
 def square(color):
     fillcolor(color)
@@ -21,20 +21,22 @@ def draw_panel():
     square('yellow')
     square('green')
 
+# step 2: type code FROM this line
 def switch(x, y):
     print('click at y = ', y)
     if 0 <= y < 100:
         bgcolor('dark green')
-        activate('green')
+        activate('green')       # <-- step 5
     elif 100 <= y < 200:
         bgcolor('#880')
-        activate('yellow')
+        activate('yellow')      # <-- step 5
     else:
         bgcolor('dark red')
-        activate('red')
-
-draw_panel()
+        activate('red')         # <-- step 5
 
 onscreenclick(switch)
+# step 2: type code TO this line
+
+draw_panel()
 
 mainloop()
